@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SpirvReflectSharp;
+﻿namespace SpirvReflectSharp;
 
 public static class SpirvReflectUtils
 {

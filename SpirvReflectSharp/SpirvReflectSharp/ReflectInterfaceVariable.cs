@@ -15,46 +15,43 @@ public struct ReflectInterfaceVariable
 	public ReflectFormat              Format;
 	public ReflectTypeDescription     TypeDescription;
 
-	public override string ToString()
-	{
-		return "ReflectInterfaceVariable {" + Name + "} [" + Members.Length + "]";
-	}
+	public override string ToString() => "ReflectInterfaceVariable {" + Name + "} [" + Members.Length + "]";
 
-	internal static unsafe ReflectInterfaceVariable[] ToManaged(SpirvReflectNative.SpvReflectInterfaceVariable** input_vars, uint var_count)
+	internal static unsafe ReflectInterfaceVariable[] ToManaged(SpirvReflectNative.SpvReflectInterfaceVariable** inputVars, uint varCount)
 	{
-		ReflectInterfaceVariable[] intf_vars = new ReflectInterfaceVariable[var_count];
+		ReflectInterfaceVariable[] intfVars = new ReflectInterfaceVariable[varCount];
 
-		for (int i = 0; i < var_count; i++)
+		for (int i = 0; i < varCount; i++)
 		{
-			var interfaceVarNative = input_vars[i];
-			var intf = *interfaceVarNative;
-			ReflectInterfaceVariable variable = new ReflectInterfaceVariable();
+			SpirvReflectNative.SpvReflectInterfaceVariable* interfaceVarNative = inputVars[i];
+			SpirvReflectNative.SpvReflectInterfaceVariable intf = *interfaceVarNative;
+			ReflectInterfaceVariable variable = new();
 
 			PopulateReflectInterfaceVariable(ref intf, ref variable);
 			variable.Members = ToManagedArray(intf.members, intf.member_count);
 
-			intf_vars[i] = variable;
+			intfVars[i] = variable;
 		}
 
-		return intf_vars;
+		return intfVars;
 	}
 
-	private static unsafe ReflectInterfaceVariable[] ToManagedArray(SpirvReflectNative.SpvReflectInterfaceVariable* input_vars, uint var_count)
+	private static unsafe ReflectInterfaceVariable[] ToManagedArray(SpirvReflectNative.SpvReflectInterfaceVariable* inputVars, uint varCount)
 	{
-		ReflectInterfaceVariable[] intf_vars = new ReflectInterfaceVariable[var_count];
+		ReflectInterfaceVariable[] intfVars = new ReflectInterfaceVariable[varCount];
 
-		for (int i = 0; i < var_count; i++)
+		for (int i = 0; i < varCount; i++)
 		{
-			var intf = input_vars[i];
-			ReflectInterfaceVariable variable = new ReflectInterfaceVariable();
+			SpirvReflectNative.SpvReflectInterfaceVariable intf = inputVars[i];
+			ReflectInterfaceVariable variable = new();
 
 			PopulateReflectInterfaceVariable(ref intf, ref variable);
 			variable.Members = ToManagedArray(intf.members, intf.member_count);
 
-			intf_vars[i] = variable;
+			intfVars[i] = variable;
 		}
 
-		return intf_vars;
+		return intfVars;
 	}
 
 	internal static unsafe void PopulateReflectInterfaceVariable (

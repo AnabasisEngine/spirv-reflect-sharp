@@ -26,9 +26,9 @@ public struct ReflectBlockVariable
 
 		for (int i = 0; i < var_count; i++)
 		{
-			var blockVarNative = push_consts[i];
-			var block = *blockVarNative;
-			ReflectBlockVariable variable = new ReflectBlockVariable();
+			SpirvReflectNative.SpvReflectBlockVariable* blockVarNative = push_consts[i];
+			SpirvReflectNative.SpvReflectBlockVariable block = *blockVarNative;
+			ReflectBlockVariable variable = new();
 
 			PopulateReflectBlockVariable(ref block, ref variable);
 			variable.Members = ToManagedArray(block.members, block.member_count);
@@ -45,8 +45,8 @@ public struct ReflectBlockVariable
 
 		for (int i = 0; i < var_count; i++)
 		{
-			var block = push_consts[i];
-			ReflectBlockVariable variable = new ReflectBlockVariable();
+			SpirvReflectNative.SpvReflectBlockVariable block = push_consts[i];
+			ReflectBlockVariable variable = new();
 
 			PopulateReflectBlockVariable(ref block, ref variable);
 			variable.Members = ToManagedArray(block.members, block.member_count);

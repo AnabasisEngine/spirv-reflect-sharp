@@ -14,14 +14,11 @@ public unsafe class SpirvReflect
 			SpirvReflectNative.SpvReflectResult result =
 				SpirvReflectNative.spvReflectCreateShaderModule((ulong)shaderBytes.Length, shdrBytecode, &module);
 
-			if (result == SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_SUCCESS)
-			{
-				return new ShaderModule(module);
-			}
-			else
-			{
+			if (result != SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_SUCCESS)
 				throw new SpirvReflectException(result);
-			}
+			
+			return new ShaderModule(module);
+
 		}
 	}
 }

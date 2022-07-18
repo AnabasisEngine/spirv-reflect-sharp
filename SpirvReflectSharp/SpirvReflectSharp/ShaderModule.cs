@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Text;
 
 namespace SpirvReflectSharp;
@@ -22,25 +21,25 @@ public class ShaderModule : IDisposable
     public string SourceFile;
     public string SourceSource;
 
-    public ExecutionModel     SPIRVExecutionModel;
+    public ExecutionModel     SpirvExecutionModel;
     public ReflectShaderStage ShaderStage;
 
     public unsafe ReflectInterfaceVariable[] EnumerateInputVariables() {
         fixed (SpirvReflectNative.SpvReflectShaderModule* inmodule = &NativeShaderModule) {
-            uint var_count = 0;
-            var result = SpirvReflectNative.spvReflectEnumerateInputVariables(inmodule, &var_count, null);
+            uint varCount = 0;
+            SpirvReflectNative.SpvReflectResult result = SpirvReflectNative.spvReflectEnumerateInputVariables(inmodule, &varCount, null);
 
             SpirvReflectUtils.Assert(result == SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_SUCCESS);
 
-            SpirvReflectNative.SpvReflectInterfaceVariable** input_vars =
-                stackalloc SpirvReflectNative.SpvReflectInterfaceVariable*[(int)(var_count *
+            SpirvReflectNative.SpvReflectInterfaceVariable** inputVars =
+                stackalloc SpirvReflectNative.SpvReflectInterfaceVariable*[(int)(varCount *
                     sizeof(SpirvReflectNative.SpvReflectInterfaceVariable))];
 
-            result = SpirvReflectNative.spvReflectEnumerateInputVariables(inmodule, &var_count, input_vars);
+            result = SpirvReflectNative.spvReflectEnumerateInputVariables(inmodule, &varCount, inputVars);
             SpirvReflectUtils.Assert(result == SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_SUCCESS);
 
             // Convert to managed
-            return ReflectInterfaceVariable.ToManaged(input_vars, var_count);
+            return ReflectInterfaceVariable.ToManaged(inputVars, varCount);
         }
     }
 
@@ -48,23 +47,23 @@ public class ShaderModule : IDisposable
         IntPtr ptr = Marshal.StringToHGlobalAnsi(name);
         try {
             fixed (SpirvReflectNative.SpvReflectShaderModule* inmodule = &NativeShaderModule) {
-                uint var_count = 0;
-                var result =
-                    SpirvReflectNative.spvReflectEnumerateEntryPointInputVariables(inmodule, (sbyte*)ptr, &var_count,
+                uint varCount = 0;
+                SpirvReflectNative.SpvReflectResult result =
+                    SpirvReflectNative.spvReflectEnumerateEntryPointInputVariables(inmodule, (sbyte*)ptr, &varCount,
                         null);
 
                 SpirvReflectUtils.Assert(result == SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_SUCCESS);
 
-                SpirvReflectNative.SpvReflectInterfaceVariable** input_vars =
-                    stackalloc SpirvReflectNative.SpvReflectInterfaceVariable*[(int)(var_count *
+                SpirvReflectNative.SpvReflectInterfaceVariable** inputVars =
+                    stackalloc SpirvReflectNative.SpvReflectInterfaceVariable*[(int)(varCount *
                         sizeof(SpirvReflectNative.SpvReflectInterfaceVariable))];
 
                 result = SpirvReflectNative.spvReflectEnumerateEntryPointInputVariables(inmodule, (sbyte*)ptr,
-                    &var_count, input_vars);
+                    &varCount, inputVars);
                 SpirvReflectUtils.Assert(result == SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_SUCCESS);
 
                 // Convert to managed
-                return ReflectInterfaceVariable.ToManaged(input_vars, var_count);
+                return ReflectInterfaceVariable.ToManaged(inputVars, varCount);
             }
         }
         finally {
@@ -74,59 +73,59 @@ public class ShaderModule : IDisposable
 
     public unsafe ReflectInterfaceVariable[] EnumerateOutputVariables() {
         fixed (SpirvReflectNative.SpvReflectShaderModule* inmodule = &NativeShaderModule) {
-            uint var_count = 0;
-            var result = SpirvReflectNative.spvReflectEnumerateOutputVariables(inmodule, &var_count, null);
+            uint varCount = 0;
+            SpirvReflectNative.SpvReflectResult result = SpirvReflectNative.spvReflectEnumerateOutputVariables(inmodule, &varCount, null);
 
             SpirvReflectUtils.Assert(result == SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_SUCCESS);
 
-            SpirvReflectNative.SpvReflectInterfaceVariable** output_vars =
-                stackalloc SpirvReflectNative.SpvReflectInterfaceVariable*[(int)(var_count *
+            SpirvReflectNative.SpvReflectInterfaceVariable** outputVars =
+                stackalloc SpirvReflectNative.SpvReflectInterfaceVariable*[(int)(varCount *
                     sizeof(SpirvReflectNative.SpvReflectInterfaceVariable))];
 
-            result = SpirvReflectNative.spvReflectEnumerateOutputVariables(inmodule, &var_count, output_vars);
+            result = SpirvReflectNative.spvReflectEnumerateOutputVariables(inmodule, &varCount, outputVars);
             SpirvReflectUtils.Assert(result == SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_SUCCESS);
 
             // Convert to managed
-            return ReflectInterfaceVariable.ToManaged(output_vars, var_count);
+            return ReflectInterfaceVariable.ToManaged(outputVars, varCount);
         }
     }
 
     public unsafe ReflectInterfaceVariable[] EnumerateInterfaceVariables() {
         fixed (SpirvReflectNative.SpvReflectShaderModule* inmodule = &NativeShaderModule) {
-            uint var_count = 0;
-            var result = SpirvReflectNative.spvReflectEnumerateInterfaceVariables(inmodule, &var_count, null);
+            uint varCount = 0;
+            SpirvReflectNative.SpvReflectResult result = SpirvReflectNative.spvReflectEnumerateInterfaceVariables(inmodule, &varCount, null);
 
             SpirvReflectUtils.Assert(result == SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_SUCCESS);
 
-            SpirvReflectNative.SpvReflectInterfaceVariable** interface_vars =
-                stackalloc SpirvReflectNative.SpvReflectInterfaceVariable*[(int)(var_count *
+            SpirvReflectNative.SpvReflectInterfaceVariable** interfaceVars =
+                stackalloc SpirvReflectNative.SpvReflectInterfaceVariable*[(int)(varCount *
                     sizeof(SpirvReflectNative.SpvReflectInterfaceVariable))];
 
-            result = SpirvReflectNative.spvReflectEnumerateInterfaceVariables(inmodule, &var_count, interface_vars);
+            result = SpirvReflectNative.spvReflectEnumerateInterfaceVariables(inmodule, &varCount, interfaceVars);
             SpirvReflectUtils.Assert(result == SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_SUCCESS);
 
             // Convert to managed
-            return ReflectInterfaceVariable.ToManaged(interface_vars, var_count);
+            return ReflectInterfaceVariable.ToManaged(interfaceVars, varCount);
         }
     }
 
     public unsafe ReflectBlockVariable[] EnumeratePushConstants() {
         fixed (SpirvReflectNative.SpvReflectShaderModule* inmodule = &NativeShaderModule) {
-            uint var_count = 0;
-            var result = SpirvReflectNative.spvReflectEnumeratePushConstants(inmodule, &var_count, null);
+            uint varCount = 0;
+            SpirvReflectNative.SpvReflectResult result = SpirvReflectNative.spvReflectEnumeratePushConstants(inmodule, &varCount, null);
 
             SpirvReflectUtils.Assert(result == SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_SUCCESS);
 
-            SpirvReflectNative.SpvReflectBlockVariable** push_consts =
-                stackalloc SpirvReflectNative.SpvReflectBlockVariable*[(int)(var_count *
+            SpirvReflectNative.SpvReflectBlockVariable** pushConsts =
+                stackalloc SpirvReflectNative.SpvReflectBlockVariable*[(int)(varCount *
                                                                              sizeof(SpirvReflectNative.
                                                                                  SpvReflectBlockVariable))];
 
-            result = SpirvReflectNative.spvReflectEnumeratePushConstants(inmodule, &var_count, push_consts);
+            result = SpirvReflectNative.spvReflectEnumeratePushConstants(inmodule, &varCount, pushConsts);
             SpirvReflectUtils.Assert(result == SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_SUCCESS);
 
             // Convert to managed
-            return ReflectBlockVariable.ToManaged(push_consts, var_count);
+            return ReflectBlockVariable.ToManaged(pushConsts, varCount);
         }
     }
 
@@ -144,10 +143,10 @@ public class ShaderModule : IDisposable
 
     public unsafe ReflectInterfaceVariable GetInputVariable(uint location) {
         fixed (SpirvReflectNative.SpvReflectShaderModule* inmodule = &NativeShaderModule) {
-            var reflt = new ReflectInterfaceVariable();
+            ReflectInterfaceVariable reflt = new ReflectInterfaceVariable();
             SpirvReflectNative.SpvReflectResult result =
                 SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_NOT_READY;
-            var nativeOut = SpirvReflectNative.spvReflectGetInputVariable(inmodule, location, &result);
+            SpirvReflectNative.SpvReflectInterfaceVariable* nativeOut = SpirvReflectNative.spvReflectGetInputVariable(inmodule, location, &result);
             SpirvReflectUtils.Assert(result == SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_SUCCESS);
             ReflectInterfaceVariable.PopulateReflectInterfaceVariable(ref *nativeOut, ref reflt);
             return reflt;
@@ -156,10 +155,10 @@ public class ShaderModule : IDisposable
 
     public unsafe ReflectInterfaceVariable GetInputVariableByLocation(uint location) {
         fixed (SpirvReflectNative.SpvReflectShaderModule* inmodule = &NativeShaderModule) {
-            var reflt = new ReflectInterfaceVariable();
+            ReflectInterfaceVariable reflt = new ReflectInterfaceVariable();
             SpirvReflectNative.SpvReflectResult result =
                 SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_NOT_READY;
-            var nativeOut = SpirvReflectNative.spvReflectGetInputVariableByLocation(inmodule, location, &result);
+            SpirvReflectNative.SpvReflectInterfaceVariable* nativeOut = SpirvReflectNative.spvReflectGetInputVariableByLocation(inmodule, location, &result);
             SpirvReflectUtils.Assert(result == SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_SUCCESS);
             ReflectInterfaceVariable.PopulateReflectInterfaceVariable(ref *nativeOut, ref reflt);
             return reflt;
@@ -168,13 +167,13 @@ public class ShaderModule : IDisposable
 
     public unsafe ReflectInterfaceVariable GetInputVariableBySemantic(string semantic) {
         fixed (SpirvReflectNative.SpvReflectShaderModule* inmodule = &NativeShaderModule) {
-            var reflt = new ReflectInterfaceVariable();
+            ReflectInterfaceVariable reflt = new ReflectInterfaceVariable();
             SpirvReflectNative.SpvReflectResult result =
                 SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_NOT_READY;
             byte[] semanticBytes = Encoding.ASCII.GetBytes(semantic);
 
             fixed (byte* ptr = semanticBytes) {
-                var nativeOut = SpirvReflectNative.spvReflectGetInputVariableBySemantic(inmodule, (sbyte*)ptr, &result);
+                SpirvReflectNative.SpvReflectInterfaceVariable* nativeOut = SpirvReflectNative.spvReflectGetInputVariableBySemantic(inmodule, (sbyte*)ptr, &result);
                 SpirvReflectUtils.Assert(result == SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_SUCCESS);
                 ReflectInterfaceVariable.PopulateReflectInterfaceVariable(ref *nativeOut, ref reflt);
                 return reflt;
@@ -193,7 +192,7 @@ public class ShaderModule : IDisposable
         EntryPointId = module.entry_point_id;
         SourceLanguage = (SourceLanguage)module.source_language;
         SourceLanguageVersion = module.source_language_version;
-        SPIRVExecutionModel = (ExecutionModel)module.spirv_execution_model;
+        SpirvExecutionModel = (ExecutionModel)module.spirv_execution_model;
         ShaderStage = (ReflectShaderStage)module.shader_stage;
         SourceFile = new string(module.source_file);
         SourceSource = new string(module.source_source);
@@ -224,7 +223,7 @@ public class ShaderModule : IDisposable
 
             // Enumerate descriptor sets
             for (int j = 0; j < module.entry_points[i].descriptor_set_count; j++) {
-                var desc = module.entry_points[i].descriptor_sets[j];
+                SpirvReflectNative.SpvReflectDescriptorSet desc = module.entry_points[i].descriptor_sets[j];
                 EntryPoints[i].DescriptorSets[j].Set = desc.set;
                 EntryPoints[i].DescriptorSets[j].Bindings = new ReflectDescriptorBinding[desc.binding_count];
 
@@ -240,16 +239,15 @@ public class ShaderModule : IDisposable
     /// </summary>
     public SpirvReflectNative.SpvReflectShaderModule NativeShaderModule;
 
-    public bool Disposed = false;
+    public bool Disposed;
 
     public unsafe void Dispose(bool freeManaged) {
-        if (!Disposed) {
-            fixed (SpirvReflectNative.SpvReflectShaderModule* inmodule = &NativeShaderModule) {
-                SpirvReflectNative.spvReflectDestroyShaderModule(inmodule);
-            }
-
-            Disposed = true;
+        if (Disposed) return;
+        fixed (SpirvReflectNative.SpvReflectShaderModule* inmodule = &NativeShaderModule) {
+            SpirvReflectNative.spvReflectDestroyShaderModule(inmodule);
         }
+
+        Disposed = true;
     }
 
     public void Dispose() {

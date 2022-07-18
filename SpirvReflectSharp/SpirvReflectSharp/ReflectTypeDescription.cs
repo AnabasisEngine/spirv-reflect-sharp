@@ -17,45 +17,45 @@ public struct ReflectTypeDescription
 		return "ReflectTypeDescription {" + StructMemberName + " " + TypeFlags + "} [" + Members.Length + "]";
 	}
 
-	internal static unsafe ReflectTypeDescription GetManaged(ref SpirvReflectNative.SpvReflectTypeDescription type_description)
+	internal static unsafe ReflectTypeDescription GetManaged(ref SpirvReflectNative.SpvReflectTypeDescription typeDescription)
 	{
-		ReflectTypeDescription desc = new ReflectTypeDescription();
+		ReflectTypeDescription desc = new();
 
-		PopulateReflectTypeDescription(ref type_description, ref desc);
-		desc.Members = ToManagedArray(type_description.members, type_description.member_count);
+		PopulateReflectTypeDescription(ref typeDescription, ref desc);
+		desc.Members = ToManagedArray(typeDescription.members, typeDescription.member_count);
 
 		return desc;
 	}
 
-	private static unsafe ReflectTypeDescription[] ToManagedArray(SpirvReflectNative.SpvReflectTypeDescription* type_description, uint member_count)
+	private static unsafe ReflectTypeDescription[] ToManagedArray(SpirvReflectNative.SpvReflectTypeDescription* typeDescription, uint memberCount)
 	{
-		ReflectTypeDescription[] intf_vars = new ReflectTypeDescription[member_count];
+		ReflectTypeDescription[] intfVars = new ReflectTypeDescription[memberCount];
 
-		for (int i = 0; i < member_count; i++)
+		for (int i = 0; i < memberCount; i++)
 		{
-			var typedesc = type_description[i];
-			ReflectTypeDescription variable = new ReflectTypeDescription();
+			SpirvReflectNative.SpvReflectTypeDescription typedesc = typeDescription[i];
+			ReflectTypeDescription variable = new();
 
 			PopulateReflectTypeDescription(ref typedesc, ref variable);
 			variable.Members = ToManagedArray(typedesc.members, typedesc.member_count);
 
-			intf_vars[i] = variable;
+			intfVars[i] = variable;
 		}
 
-		return intf_vars;
+		return intfVars;
 	}
 
 	private static unsafe void PopulateReflectTypeDescription(
-		ref SpirvReflectNative.SpvReflectTypeDescription type_description,
+		ref SpirvReflectNative.SpvReflectTypeDescription typeDescription,
 		ref ReflectTypeDescription desc)
 	{
-		desc.Id = type_description.id;
-		desc.Op = (Op)type_description.op;
-		desc.TypeName = new string(type_description.type_name);
-		desc.StructMemberName = new string(type_description.struct_member_name);
-		desc.StorageClass = (StorageClass)type_description.storage_class;
-		desc.TypeFlags = (ReflectType)type_description.type_flags.Data;
-		desc.DecorationFlags = (ReflectDecoration)type_description.decoration_flags.Data;
-		desc.Traits = new Traits(type_description.traits);
+		desc.Id = typeDescription.id;
+		desc.Op = (Op)typeDescription.op;
+		desc.TypeName = new string(typeDescription.type_name);
+		desc.StructMemberName = new string(typeDescription.struct_member_name);
+		desc.StorageClass = (StorageClass)typeDescription.storage_class;
+		desc.TypeFlags = (ReflectType)typeDescription.type_flags.Data;
+		desc.DecorationFlags = (ReflectDecoration)typeDescription.decoration_flags.Data;
+		desc.Traits = new Traits(typeDescription.traits);
 	}
 }

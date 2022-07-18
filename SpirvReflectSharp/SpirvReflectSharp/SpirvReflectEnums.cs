@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SpirvReflectSharp;
+﻿namespace SpirvReflectSharp;
 
 /// <summary>
 /// A SPIR-V shader compiler
