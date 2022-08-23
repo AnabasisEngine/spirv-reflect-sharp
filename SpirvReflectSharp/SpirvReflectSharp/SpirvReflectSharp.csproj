@@ -29,7 +29,7 @@
 
 	<ItemGroup>
 	  <PackageReference Include="System.Memory" Version="4.5.5" />
-	  <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="5.0.0" />
+	  <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="7.0.0-preview.2.22152.2" />
 	</ItemGroup>
 
 </Project>
