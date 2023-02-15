@@ -1,16 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-	<PropertyGroup>
-		<TargetFramework>netcoreapp3.1</TargetFramework>
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<IsPackable>false</IsPackable>
-		<OutputType>exe</OutputType>
-		<StartupObject>SpirvReflectSharp.Tests.Program</StartupObject>
-		<Platforms>AnyCPU;x64;x86</Platforms>
-	</PropertyGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\SpirvReflectSharp\SpirvReflectSharp.csproj" />
-	</ItemGroup>
-
+  <PropertyGroup>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <IsPackable>false</IsPackable>
+    <OutputType>exe</OutputType>
+    <StartupObject>SpirvReflectSharp.Tests.Program</StartupObject>
+    <Platforms>AnyCPU;x64;x86</Platforms>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SpirvReflectSharp\SpirvReflectSharp.csproj" />
+  </ItemGroup>
 </Project>
