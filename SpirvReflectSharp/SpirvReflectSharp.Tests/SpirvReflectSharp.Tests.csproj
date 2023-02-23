@@ -9,4 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SpirvReflectSharp\SpirvReflectSharp.csproj" />
   </ItemGroup>
+  <ItemGroup>
+
+  </ItemGroup>
 </Project>
