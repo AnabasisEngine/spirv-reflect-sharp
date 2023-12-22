@@ -20,6 +20,12 @@
         "resolved": "2023.2.0-eap2",
         "contentHash": "sAMoz5FitJuhzcJcJ9qtmzcEWisKW502E8h5Zz9zJhoR9hkzfQlXS9/VGAR+uul+PurjgqK4Y+sVtBCiGCRSAw=="
       },
+      "Nerdbank.GitVersioning": {
+        "type": "Direct",
+        "requested": "[3.6.128, )",
+        "resolved": "3.6.128",
+        "contentHash": "zeA+Ho3XlPgt6P9MRALlkEvfOOzDQdNseV0xia/nSfC1lSrl0+gizlWyixaHvSYUw2ru7pBIKnK451bYOjPRjA=="
+      },
       "NuGetizer": {
         "type": "Direct",
         "requested": "[1.0.2, )",
@@ -178,7 +184,6 @@
         "type": "Project",
         "dependencies": {
           "JetBrains.Annotations": "[2023.2.0-eap2, )",
-          "NuGetizer": "[1.0.2, )",
           "System.Memory": "[4.5.5, )",
           "System.Runtime.CompilerServices.Unsafe": "[7.0.0-preview.2.22152.2, )",
           "ThisAssembly": "[1.2.14, )"

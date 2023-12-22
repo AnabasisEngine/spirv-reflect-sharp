@@ -20,6 +20,12 @@
         "resolved": "2023.2.0-eap2",
         "contentHash": "sAMoz5FitJuhzcJcJ9qtmzcEWisKW502E8h5Zz9zJhoR9hkzfQlXS9/VGAR+uul+PurjgqK4Y+sVtBCiGCRSAw=="
       },
+      "Nerdbank.GitVersioning": {
+        "type": "Direct",
+        "requested": "[3.6.128, )",
+        "resolved": "3.6.128",
+        "contentHash": "zeA+Ho3XlPgt6P9MRALlkEvfOOzDQdNseV0xia/nSfC1lSrl0+gizlWyixaHvSYUw2ru7pBIKnK451bYOjPRjA=="
+      },
       "NETStandard.Library": {
         "type": "Direct",
         "requested": "[2.0.3, )",
